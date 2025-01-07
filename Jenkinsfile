@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'agent-03' }
     tools {
-        jdk 'Java17'
+        jdk 'java17'
         maven 'mv3'
     }
   
