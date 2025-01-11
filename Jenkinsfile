@@ -77,7 +77,7 @@ pipeline {
                 script {
                   // Mise à jour de la base de données de vulnérabilités
                   sh """
-                  docker run --rm anchore/grype:latest -u
+                  docker run --rm anchore/grype:latest update
                   """
             
                  // Scan de l'image avec Grype
