@@ -75,15 +75,22 @@ pipeline {
         stage("Grype Scan") {
             steps {
                 script {
-                    sh ("""
-                       docker run --rm -v /var/run/docker.sock:/var/run/docker.sock anchore/grype:latest \
-                       achrefchebbi/register-app-pipeline:latest \
-                       --fail-on high \
-                       --output table
-                       """)
-                        }
+                  // Mise à jour de la base de données de vulnérabilités
+                  sh """
+                  docker run --rm anchore/grype:latest -u
+                  """
+            
+                 // Scan de l'image avec Grype
+                 sh """
+                 docker run --rm -v /var/run/docker.sock:/var/run/docker.sock anchore/grype:latest \
+                 achrefchebbi/register-app-pipeline:latest \
+                 --fail-on high \
+                 --output table
+                 """
                }
-           }
+           }    
+       }
+
              
     }
 
