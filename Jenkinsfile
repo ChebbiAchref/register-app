@@ -72,32 +72,15 @@ pipeline {
             }
 
         }
-        //stage("Grype Scan") {
-            //steps {
-                //script {
-                  // Mise à jour de la base de données de vulnérabilités
-                  //sh """
-                  //docker run --rm anchore/grype:latest update
-                  //"""
-            
-                 // Scan de l'image avec Grype
-                 //sh """
-                // docker run --rm -v /var/run/docker.sock:/var/run/docker.sock anchore/grype:latest \
-                // achrefchebbi/register-app-pipeline:latest \
-                 //--fail-on high \
-               //  --output table
-             //    """
-           //    }
-         //  }    
-       //}
-	 stage("Trigger CD Pipeline") {
+       
+	stage("Trigger CD Pipeline") {
             steps {
                 script {
                     sh "curl -v -k --user clouduser:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'https://baskets-ecuador-intl-implications.trycloudflare.com/job/gitops-register-app-cd/buildWithParameters?token=gitops-token'"
                 }
             }
        }
-    }    
+        
 
              
     }
